@@ -2,6 +2,7 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const app = express();
 const mysql = require("mysql");
+const cors = require("cors");
 const db = mysql.createPool({
   connectionLimit: 100,
   host: "127.0.0.1", //This is your localhost IP
@@ -14,6 +15,8 @@ db.getConnection((err, connection) => {
   if (err) throw err.sqlMessage;
   console.log("DB connected successful: " + connection.threadId);
 });
+
+app.use(cors());
 const port = 3000;
 
 app.use(express.json());
@@ -71,6 +74,12 @@ app.post("/createUser", async (req, res) => {
 //LOGIN (AUTHENTICATE USER)
 app.post("/login", (req, res) => {
   const { email, userPass } = req.body;
+  if (!email || !userPass) {
+    return res.json({
+      isSuccess: false,
+      error: "Please fill all the fields!",
+    });
+  }
   db.getConnection(async (err, connection) => {
     if (err) throw err;
     const sqlSearch = "Select * from userTable where email = ?";
@@ -85,10 +94,8 @@ app.post("/login", (req, res) => {
         });
       } else {
         const hashedPassword = result[0].userPass;
-        //get the hashedPassword from result
-        if (await bcrypt.compare(userPass, hashedPassword)) {
-          console.log("---------> Login Successful");
 
+        if (await bcrypt.compare(userPass, hashedPassword)) {
           return res.json({
             isSuccess: true,
             msg: "Login Successfull!",
