@@ -1,51 +1,44 @@
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crop disease detection</title>
+    <title>Cotton Disease Classification</title>
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
     <section class="wrapper">
         <div class="form signup">
             <header>Registration</header>
-            <div id="errMsg" style="background-color: color: white; padding: 15px;margin-top: 20px;text-align: center;">
-            </div>
             <form action="#">
-                <input id="userName" type="text" placeholder="Full name" required />
-                <input id="email" type="text" placeholder="Email address" required />
-                <input id="userPass" type="password" placeholder="Password" required />
-                <input id="gender" type="gender" placeholder="Gender" required />
+                <input type="text" placeholder="Full name" required/>
+                <input type="text" placeholder="Email address" required/>
+                <input type="password" placeholder="Password" required/>
+                <input type="gender" placeholder="Gender" required/>
                 <div class="checkbox">
                     <input type="checkbox" id="signupCheckup" />
                     <label for=" signupCheckup">I accept all terms and conditions</label>
                 </div>
-                <input onclick="userSignUp()" type="button" value="Signup">
-
+               
+                <input type="submit" onclick="location.href='index2.html'" value="Signup">
+                
             </form>
         </div>
         <div class="form login">
             <header>Login</header>
-
-            <div id="errMsgAuth"
-                style="background-color: color: white; padding: 15px;margin-top: 20px;text-align: center;">
-            </div>
-
             <form action="#">
-                <input id="emailAuth" type="text" placeholder="Email address or Phone" required />
-                <input id="passAuth" type="password" placeholder="Password" required />
+             <input type="text" placeholder="Email address or Phone" required/>
+                <input type="password" placeholder="Password" required/>
                 <a href="#">Forgot password?</a>
-                <input onclick="userSignIn()" type="submit" value="Login" />
-
+                <input type="submit" onclick="location.href='index2.html'" value="Login"/>
+                
             </form>
         </div>
         <script>
             const wrapper = document.querySelector(".wrapper"),
-                signupHeader = document.querySelector(".signup header"),
-                loginHeader = document.querySelector(".login header");
+            signupHeader = document.querySelector(".signup header"),
+            loginHeader = document.querySelector(".login header");
 
             loginHeader.addEventListener("click", () => {
                 wrapper.classList.add("active");
@@ -53,69 +46,20 @@
             });
             signupHeader.addEventListener("click", () => {
                 wrapper.classList.remove("active");
+
             });
-
-
-            const userSignUp = async () => {
-                const errorMsgElement = document.querySelector("#errMsg");
-
-                const email = document.querySelector("#email").value;
-                const userName = document.querySelector("#userName").value;
-                const userPass = document.querySelector("#userPass").value;
-                const gender = document.querySelector("#gender").value;
-
-                const res = await fetch("http://127.0.0.1:3000/createUser", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        "userName": userName,
-                        "userPass": userPass,
-                        "email": email,
-                        "gender": gender
-                    })
-                });
-
-                const msg = await res.json();
-                if (msg?.isSuccess == true) {
-                    errorMsgElement.innerHTML = msg?.msg;
-                } else {
-                    errorMsgElement.innerHTML = msg?.error;
-                }
-                setTimeout(() => {
-                    errorMsgElement.innerHTML = "";
-                }, 2000);
-            }
-
-
-            const userSignIn = async () => {
-                const errorMsgElement = document.querySelector("#errMsgAuth");
-                const email = document.querySelector("#emailAuth").value;
-                const userPass = document.querySelector("#passAuth").value;
-
-                const res = await fetch("http://127.0.0.1:3000/login", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        "email": email,
-                        "userPass": userPass,
-                    })
-                });
-
-                const msg = await res.json();
-                if (msg?.isSuccess == true) {
-                    errorMsgElement.innerHTML = msg?.msg;
-                } else {
-                    errorMsgElement.innerHTML = msg?.error;
-                }
-                setTimeout(() => {
-                    errorMsgElement.innerHTML = "";
-                }, 2000);
-            }
-
+            // function auth(){
+            //     var email = document.getElementById("email").value
+            //     var password = document.getElementById("password").value;
+            //     if(email=="admin@gmail.com "&& password=="admin123"){
+            //         window.location.assign("index.html")
+            //         alert("Login Successfuly");
+            //     }
+            //     else{
+            //         alert("Invalid Information");
+            //         return;
+            //     }
+            // }
 
 
 
@@ -124,5 +68,9 @@
         </script>
     </section>
 </body>
-
 </html>
+
+
+
+
+
